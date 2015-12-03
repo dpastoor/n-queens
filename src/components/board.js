@@ -30,8 +30,8 @@ render() {
            textAlign: 'center', verticalAlign: 'middle'}}
       >
    {
-      tilesData.map(tile =>
-          <GridTile style={{borderColor:'black', borderStyle: 'solid'}}><div>
+      tilesData.map((tile, i) =>
+          <GridTile style={{borderColor:'black', borderStyle: 'solid'}} key={i}><div>
               <h1>{tile.title} </h1>
           </div></GridTile>
       )
