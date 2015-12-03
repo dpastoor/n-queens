@@ -2,3 +2,6 @@
 node_modules
 npm-debug.log
 dist
+.idea/
+src/components/*-compiled.*
+src/*-compiled.*
