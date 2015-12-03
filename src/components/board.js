@@ -21,7 +21,7 @@ export default class Board extends React.Component {
        <GridList
            cols={n}
            cellHeight={cellTotalSize/n}
-           style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'red', borderStyle: 'solid', borderColor: 'black',
+           style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'red',
            textAlign: 'center', verticalAlign: 'middle'}}
       >
    {
