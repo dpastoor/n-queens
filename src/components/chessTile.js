@@ -7,7 +7,7 @@ import mui from 'material-ui';
 import  {GridTile} from 'material-ui';
 
 export default class ChessTile extends React.Component {
-    
+
     _onClick(e, value) {
         alert('clicked');
     }
