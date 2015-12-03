@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import mui from 'material-ui';
 import {GridList, GridTile, IconButton} from 'material-ui';
 import _ from 'lodash';
+import ChessTile from './chessTile';
+
 export default class Board extends React.Component {
     render() {
 
@@ -26,9 +28,7 @@ export default class Board extends React.Component {
       >
    {
       tilesData.map((tile, i) =>
-          <GridTile style={{borderColor:'black', borderStyle: 'solid'}} key={i}><div>
-              <h1>{tile.title} </h1>
-          </div></GridTile>
+        <ChessTile title={tile.title} key={i} />
       )
    }
     </GridList>
