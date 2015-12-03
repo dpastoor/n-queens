@@ -7,10 +7,10 @@ import mui from 'material-ui';
 import {GridList, GridTile, IconButton} from 'material-ui';
 import _ from 'lodash';
 export default class Board extends React.Component {
+    render() {
 
-render() {
-    let n = 6
-    let gridSize = 600;
+    let n = this.props.n;
+    let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
     // generate some fake data
     let range = _.range(n);
@@ -35,3 +35,4 @@ render() {
    )
 }
 }
+
