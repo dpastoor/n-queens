@@ -5,23 +5,18 @@
 import React, { Component } from 'react';
 import mui from 'material-ui';
 import {GridList, GridTile, IconButton} from 'material-ui';
+import _ from 'lodash';
 export default class Board extends React.Component {
 
 render() {
-    let n = 3
+    let n = 6
     let gridSize = 600;
-    let cellTotalSize = gridSize-20;
-    let tilesData = [
-        {title: 'test1', author:'devin'},
-        {title: 'test3', author:'devin'},
-        {title: 'test4', author:'devin'},
-        {title: 'test5', author:'devin'},
-        {title: 'test6', author:'devin'},
-        {title: 'test2', author:'albert'},
-        {title: 'test7', author:'devin'},
-        {title: 'test8', author:'albert'},
-        {title: 'test9', author:'albert'}
-    ];
+    let cellTotalSize = gridSize-60;
+    // generate some fake data
+    let range = _.range(n);
+    let cells = _.flatten(_.map(range, (i) => _.map(range, (r) => r+i*n)))
+    let tilesData = _.map(cells, (c) => {return {title: c};})
+    // end data generation
    return(
        <GridList
            cols={n}
