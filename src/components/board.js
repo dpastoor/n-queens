@@ -10,7 +10,7 @@ import ChessTile from './chessTile';
 
 export default class Board extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {allSolutionBoards: [], calculating: true, stepNum: 1, paused:false};
     }
     _pause() {
@@ -19,15 +19,16 @@ export default class Board extends React.Component {
     }
     _calculateSolutions() {
         alert('calculating');
-        var solutions = []
+        var solutions = [];
         var allBoards = [];
         var n = this.props.n;
-
+        var major;
+        var minor;
         var inner = function(majD, minD, col, queens){
 
-            var board = []
+            var board = [];
             for(var r = 0; r < n; r++){
-                var   row = []
+                var   row = [];
                 for( var c = 0; c < n; c++){
                     row.push('-')
                 }
@@ -38,7 +39,7 @@ export default class Board extends React.Component {
                 board.forEach(function(row){
                     row[col] = 'x'
                 })
-            })
+            });
 
             for(var r = 0; r < n; r++){
                 for( var c = 0; c < n; c++){
@@ -52,10 +53,10 @@ export default class Board extends React.Component {
             }
 
             queens.forEach(function(col,row){
-                board[row] = board[row].map(function(x){ return 'x'})
+                board[row] = board[row].map(function(x){ return 'x'});
                 board[row][col] = 'Q'
 
-            })
+            });
 
             allBoards.push(board);
             if(queens.length == n){
@@ -65,32 +66,31 @@ export default class Board extends React.Component {
 
             else{
                 for(var i = 0; i < n; i++){
-                    var  minor = i + queens.length
-                    var  major = i - queens.length
+                     minor = i + queens.length;
+                     major = i - queens.length;
 
                     if(!(majD[major] || minD[minor] || col[i]) ){
-                        queens.push(i)
-                        col[i] = 1
-                        majD[major] = 1
-                        minD[minor] = 1
-                        inner(majD, minD, col, queens)
-                        queens
+                        queens.push(i);
+                        col[i] = 1;
+                        majD[major] = 1;
+                        minD[minor] = 1;
+                        inner(majD, minD, col, queens);
 
                     }
 
                 }
 
             }
-            i = queens.pop()
+            i = queens.pop();
             delete col[i];
             minor = i + queens.length;
             major = i - queens.length;
             delete majD[major];
             delete minD[minor];
 
-        }
+        };
 
-        inner({}, {}, {}, [])
+        inner({}, {}, {}, []);
         this.setState({allSolutionBoards: allBoards, calculating: false})
     }
     componentWillMount() {
