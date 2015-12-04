@@ -10,10 +10,6 @@ export default class ChessTile extends React.Component {
     constructor(props) {
         super(props);
     }
-    _onClick() {
-        var collisionState = this.props.data.hasConflict;
-        console.log(this.props)
-    }
     render() {
        // let queen = this.props.data.hasQueen ? '♕' : "";
        console.log(queenImg);
@@ -32,7 +28,6 @@ export default class ChessTile extends React.Component {
         }
    return(
            <GridTile style={styles}
-                     onClick={this._onClick.bind(this)}
            >
            </GridTile>
    )

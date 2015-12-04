@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board.js'
-import {Slider} from 'material-ui';
+import {Slider, DropDownMenu, RaisedButton} from 'material-ui';
+import _ from 'lodash';
 export class App extends Component {
     constructor(props) {
         super(props);
         this.state = {n: 5}
     }
 
-    updateSlider(e, value) {
+    updateSlider(n) {
        this.setState({
-            n: value
+            n: n
         });
     }
   render() {
       let boardSize = 600;
+      let nQueensRange = [4, 5, 6, 7, 8];
     return (
        <div>
-           <div style={{height: '50px', width:boardSize }}>
-               <Slider name="mySlider" ref="mySlider" defaultValue={5} step={1} min={1} max={8} onChange={this.updateSlider.bind(this)} />
-           </div>
+           {_.map(nQueensRange, (n) => <RaisedButton label={n} onClick={() => this.updateSlider(n)} key={n}/>)}
 
            <Board n={this.state.n} gridSize={boardSize} />
        </div>

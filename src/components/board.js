@@ -11,23 +11,23 @@ import ChessTile from './chessTile';
 export default class Board extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {allSolutionBoards: {}, calculating: true, stepNum: 1, paused:false};
+        this.state = {allSolutionBoards: [], calculating: true, stepNum: 1, paused:false};
     }
     _pause() {
         let currentPause = this.state.paused;
         this.setState({paused: !currentPause})
     }
-    componentWillMount() {
+    _calculateSolutions() {
+
         var solutions = []
         var allBoards = [];
-        var n = 8;
-        console.log('-------------------------')
+        var n = this.props.n;
 
         var inner = function(majD, minD, col, queens){
 
             var board = []
             for(var r = 0; r < n; r++){
-             var   row = []
+                var   row = []
                 for( var c = 0; c < n; c++){
                     row.push('-')
                 }
@@ -65,8 +65,8 @@ export default class Board extends React.Component {
 
             else{
                 for(var i = 0; i < n; i++){
-                  var  minor = i + queens.length
-                  var  major = i - queens.length
+                    var  minor = i + queens.length
+                    var  major = i - queens.length
 
                     if(!(majD[major] || minD[minor] || col[i]) ){
                         queens.push(i)
@@ -92,18 +92,26 @@ export default class Board extends React.Component {
 
         inner({}, {}, {}, [])
         this.setState({allSolutionBoards: allBoards, calculating: false})
-        console.log(allBoards);
     }
-
+    componentWillMount() {
+        this._calculateSolutions();
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            calculating: true,
+            stepNum: 1
+        });
+        this._calculateSolutions();
+    }
     render() {
-        if (!this.state.paused) {
+        if(!this.state.calculating) {
+    if (!this.state.paused) {
             setTimeout(() => {
                 let steps = this.state.stepNum + 1
-                console.log(steps)
                 this.setState({stepNum: steps})
-            },1)
+            },10000)
         }
-    let n = 8;
+    let n = this.props.n ;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
     // generate some fake data
@@ -145,6 +153,8 @@ export default class Board extends React.Component {
            </GridList>
        </div>
    )
+        }
+
 }
 }
 
