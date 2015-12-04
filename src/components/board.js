@@ -11,7 +11,11 @@ import ChessTile from './chessTile';
 export default class Board extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {allSolutionBoards: {}, calculating: true, stepNum: 1};
+        this.state = {allSolutionBoards: {}, calculating: true, stepNum: 1, paused:false};
+    }
+    _pause() {
+        let currentPause = this.state.paused;
+        this.setState({paused: !currentPause})
     }
     componentWillMount() {
         var solutions = []
@@ -92,11 +96,13 @@ export default class Board extends React.Component {
     }
 
     render() {
-    setTimeout(() => {
-        let steps = this.state.stepNum + 1
-        console.log(steps)
-        this.setState({stepNum: steps})
-    },500)
+        if (!this.state.paused) {
+            setTimeout(() => {
+                let steps = this.state.stepNum + 1
+                console.log(steps)
+                this.setState({stepNum: steps})
+            },1)
+        }
     let n = 8;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
@@ -124,18 +130,20 @@ export default class Board extends React.Component {
         console.log('----tilesData---')
         console.log(tilesData)
    return(
-       <GridList
-           cols={n}
-           cellHeight={cellTotalSize/n}
-           style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'black',
+       <div onClick={this._pause.bind(this)}>
+           <GridList
+               cols={n}
+               cellHeight={cellTotalSize/n}
+               style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'black',
            textAlign: 'center', verticalAlign: 'middle'}}
-      >
-   {
-      tilesData.map((tile, i) =>
-        <ChessTile data={tile} key={i} />
-      )
-   }
-    </GridList>
+           >
+               {
+                   tilesData.map((tile, i) =>
+                       <ChessTile data={tile} key={i} />
+                   )
+               }
+           </GridList>
+       </div>
    )
 }
 }
