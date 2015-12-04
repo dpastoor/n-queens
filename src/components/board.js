@@ -11,13 +11,12 @@ import ChessTile from './chessTile';
 export default class Board extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {allSolutionBoards: [], calculating: true, stepNum: 1, paused:false};
+        this.state = {allSolutionBoards: [], calculating: true, stepNum: 0, paused:false};
     }
 
-    _calculateSolutions() {
+    _calculateSolutions(n) {
         var solutions = [];
         var allBoards = [];
-        var n = this.props.n;
         var major;
         var minor;
         var inner = function(majD, minD, col, queens){
@@ -90,29 +89,29 @@ export default class Board extends React.Component {
         this.setState({allSolutionBoards: allBoards, calculating: false})
     }
     componentWillMount() {
-        this._calculateSolutions();
+        this._calculateSolutions(this.props.n);
     }
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            calculating: true,
-            stepNum: 1
-        });
-        this._calculateSolutions();
+        if (nextProps.n !== this.props.n) {
+            this.setState({
+                stepNum: 0,
+                allSolutionBoards: []
+            });
+            this._calculateSolutions(nextProps.n);
+        }
     }
     render() {
-        if(!this.state.calculating) {
     if (!this.props.paused) {
         if(this.state.stepNum < this.state.allSolutionBoards.length) {
             setTimeout(() => {
                 let steps = this.state.stepNum + 1;
                 this.setState({stepNum: steps})
-            },100)
+            },this.props.speed)
         }
         }
-    let n = this.props.n ;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
-    let range = _.range(n);
+    let range = _.range(this.props.n);
         let tilesData = _.flatten(this.state.allSolutionBoards[this.state.stepNum]).map((x) => {
             switch (x) {
                 case 'Q':
@@ -126,8 +125,8 @@ export default class Board extends React.Component {
    return(
        <div>
            <GridList
-               cols={n}
-               cellHeight={cellTotalSize/n}
+               cols={this.props.n}
+               cellHeight={cellTotalSize/this.props.n}
                style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'black',
            textAlign: 'center', verticalAlign: 'middle'}}
            >
@@ -139,7 +138,6 @@ export default class Board extends React.Component {
            </GridList>
        </div>
    )
-        }
 
 }
 }
