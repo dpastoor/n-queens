@@ -11,24 +11,30 @@ import ChessTile from './chessTile';
 export default class Board extends React.Component {
     render() {
 
-    let n = this.props.n;
+    let n = 4;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
     // generate some fake data
     let range = _.range(n);
-    let cells = _.flatten(_.map(range, (i) => _.map(range, (r) => r+i*n)))
-    let tilesData = _.map(cells, (c) => {return {title: c};})
+   // let cells = _.flatten(_.map(range, (i) => _.map(range, (r) => r+i*n)))
+    let tilesData = _.flatten([
+            [{hasQueen: 1, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1}],
+            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 0}],
+            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0}],
+            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 1}]
+        ])
+    //let tilesData = _.map(cells, (c) => {return {title: c};})
     // end data generation
    return(
        <GridList
            cols={n}
            cellHeight={cellTotalSize/n}
-           style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'red',
+           style={{width: gridSize, height: gridSize, overflowY: 'auto', color: 'black',
            textAlign: 'center', verticalAlign: 'middle'}}
       >
    {
       tilesData.map((tile, i) =>
-        <ChessTile title={tile.title} key={i} />
+        <ChessTile data={tile} key={i} />
       )
    }
     </GridList>
