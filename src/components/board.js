@@ -106,25 +106,17 @@ export default class Board extends React.Component {
     render() {
         if(!this.state.calculating) {
     if (!this.state.paused) {
+        if(this.state.stepNum < this.state.allSolutionBoards.length) {
             setTimeout(() => {
                 let steps = this.state.stepNum + 1;
                 this.setState({stepNum: steps})
-            },1000)
+            },200)
+        }
         }
     let n = this.props.n ;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
-    // generate some fake data
     let range = _.range(n);
-   // let cells = _.flatten(_.map(range, (i) => _.map(range, (r) => r+i*n)))
-/*    let tilesData = _.flatten([
-            [{hasQueen: 1, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1}],
-            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 0}],
-            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0}],
-            [{hasQueen: 0, hasConflict: 1},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 0},{hasQueen: 0, hasConflict: 1}]
-        ])*/
-    //let tilesData = _.map(cells, (c) => {return {title: c};})
-    // end data generation
         let tilesData = _.flatten(this.state.allSolutionBoards[this.state.stepNum]).map((x) => {
             switch (x) {
                 case 'Q':
@@ -135,8 +127,6 @@ export default class Board extends React.Component {
                     return {hasQueen:0, hasConflict:0};
             }
         });
-        console.log('----tilesData---')
-        console.log(tilesData)
    return(
        <div onClick={this._pause.bind(this)}>
            <GridList

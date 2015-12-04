@@ -11,8 +11,6 @@ export default class ChessTile extends React.Component {
         super(props);
     }
     render() {
-       // let queen = this.props.data.hasQueen ? '♕' : "";
-       console.log(queenImg);
         let styles = {
             borderColor:'black',
             borderStyle: 'solid'
