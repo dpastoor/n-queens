@@ -16,7 +16,7 @@ export default class Board extends React.Component {
     componentWillMount() {
         var solutions = []
         var allBoards = [];
-        var n = 4
+        var n = 8;
         console.log('-------------------------')
 
         var inner = function(majD, minD, col, queens){
@@ -92,8 +92,12 @@ export default class Board extends React.Component {
     }
 
     render() {
-
-    let n = 4;
+    setTimeout(() => {
+        let steps = this.state.stepNum + 1
+        console.log(steps)
+        this.setState({stepNum: steps})
+    },500)
+    let n = 8;
     let gridSize = this.props.gridSize;
     let cellTotalSize = gridSize-60;
     // generate some fake data
