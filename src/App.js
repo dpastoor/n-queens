@@ -9,7 +9,6 @@ export class App extends Component {
         this.state = {n: 5, paused: false}
     }
     _pause() {
-        alert('clicked paused');
         let currentPause = this.state.paused;
         this.setState({paused: !currentPause})
     }
