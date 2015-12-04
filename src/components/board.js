@@ -13,12 +13,8 @@ export default class Board extends React.Component {
         super(props);
         this.state = {allSolutionBoards: [], calculating: true, stepNum: 1, paused:false};
     }
-    _pause() {
-        let currentPause = this.state.paused;
-        this.setState({paused: !currentPause})
-    }
+
     _calculateSolutions() {
-        alert('calculating');
         var solutions = [];
         var allBoards = [];
         var n = this.props.n;
@@ -105,12 +101,12 @@ export default class Board extends React.Component {
     }
     render() {
         if(!this.state.calculating) {
-    if (!this.state.paused) {
+    if (!this.props.paused) {
         if(this.state.stepNum < this.state.allSolutionBoards.length) {
             setTimeout(() => {
                 let steps = this.state.stepNum + 1;
                 this.setState({stepNum: steps})
-            },200)
+            },100)
         }
         }
     let n = this.props.n ;
@@ -128,7 +124,7 @@ export default class Board extends React.Component {
             }
         });
    return(
-       <div onClick={this._pause.bind(this)}>
+       <div>
            <GridList
                cols={n}
                cellHeight={cellTotalSize/n}

@@ -6,9 +6,13 @@ import _ from 'lodash';
 export class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {n: 5}
+        this.state = {n: 5, paused: false}
     }
-
+    _pause() {
+        alert('clicked paused');
+        let currentPause = this.state.paused;
+        this.setState({paused: !currentPause})
+    }
     _updateSlider(n) {
        this.setState({
             n: n
@@ -21,8 +25,12 @@ export class App extends Component {
        <div>
            {_.map(nQueensRange, (n) => <RaisedButton label={n} onClick={() => this._updateSlider(n)} key={n}/>)}
 
-           <Board n={this.state.n} gridSize={boardSize} />
+           <Board n={this.state.n} gridSize={boardSize} paused={this.state.paused}/>
+           <RaisedButton label="pause" secondary={true} onClick={this._pause.bind(this)} />
        </div>
     );
   }
 }
+
+
+
