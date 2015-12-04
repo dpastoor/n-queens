@@ -9,7 +9,7 @@ export class App extends Component {
         this.state = {n: 5}
     }
 
-    updateSlider(n) {
+    _updateSlider(n) {
        this.setState({
             n: n
         });
@@ -19,7 +19,7 @@ export class App extends Component {
       let nQueensRange = [4, 5, 6, 7, 8];
     return (
        <div>
-           {_.map(nQueensRange, (n) => <RaisedButton label={n} onClick={() => this.updateSlider(n)} key={n}/>)}
+           {_.map(nQueensRange, (n) => <RaisedButton label={n} onClick={() => this._updateSlider(n)} key={n}/>)}
 
            <Board n={this.state.n} gridSize={boardSize} />
        </div>

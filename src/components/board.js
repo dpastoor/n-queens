@@ -18,7 +18,7 @@ export default class Board extends React.Component {
         this.setState({paused: !currentPause})
     }
     _calculateSolutions() {
-
+        alert('calculating');
         var solutions = []
         var allBoards = [];
         var n = this.props.n;
@@ -107,9 +107,9 @@ export default class Board extends React.Component {
         if(!this.state.calculating) {
     if (!this.state.paused) {
             setTimeout(() => {
-                let steps = this.state.stepNum + 1
+                let steps = this.state.stepNum + 1;
                 this.setState({stepNum: steps})
-            },10000)
+            },1000)
         }
     let n = this.props.n ;
     let gridSize = this.props.gridSize;
