@@ -9,6 +9,88 @@ import _ from 'lodash';
 import ChessTile from './chessTile';
 
 export default class Board extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {allSolutionBoards: {}, calculating: true};
+    }
+    componentWillMount() {
+        var solutions = []
+        var allBoards = [];
+        var n = 4
+        console.log('-------------------------')
+
+        var inner = function(majD, minD, col, queens){
+
+            var board = []
+            for(var r = 0; r < n; r++){
+             var   row = []
+                for( var c = 0; c < n; c++){
+                    row.push('-')
+                }
+                board.push(row)
+            }
+
+            Object.keys(col).forEach(function(col){
+                board.forEach(function(row){
+                    row[col] = 'x'
+                })
+            })
+
+            for(var r = 0; r < n; r++){
+                for( var c = 0; c < n; c++){
+                    if(majD[r-c]){
+                        board[r][c] = 'x'
+                    }
+                    if(minD[r+c]){
+                        board[r][c] = 'x'
+                    }
+                }
+            }
+
+            queens.forEach(function(col,row){
+                board[row] = board[row].map(function(x){ return 'x'})
+                board[row][col] = 'Q'
+
+            })
+
+            allBoards.push(board);
+            if(queens.length == n){
+                solutions.push(queens.slice())
+
+            }
+
+            else{
+                for(var i = 0; i < n; i++){
+                  var  minor = i + queens.length
+                  var  major = i - queens.length
+
+                    if(!(majD[major] || minD[minor] || col[i]) ){
+                        queens.push(i)
+                        col[i] = 1
+                        majD[major] = 1
+                        minD[minor] = 1
+                        inner(majD, minD, col, queens)
+                        queens
+
+                    }
+
+                }
+
+            }
+            i = queens.pop()
+            delete col[i];
+            minor = i + queens.length;
+            major = i - queens.length;
+            delete majD[major];
+            delete minD[minor];
+
+        }
+
+        inner({}, {}, {}, [])
+        this.setState({allSolutionBoards: allBoards, calculating: false})
+        console.log(allBoards);
+    }
+
     render() {
 
     let n = 4;
