@@ -11,7 +11,7 @@ import ChessTile from './chessTile';
 export default class Board extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {allSolutionBoards: {}, calculating: true};
+        this.state = {allSolutionBoards: {}, calculating: true, stepNum: 1};
     }
     componentWillMount() {
         var solutions = []
@@ -107,7 +107,7 @@ export default class Board extends React.Component {
         ])*/
     //let tilesData = _.map(cells, (c) => {return {title: c};})
     // end data generation
-        let tilesData = _.flatten(this.state.allSolutionBoards[3]).map((x) => {
+        let tilesData = _.flatten(this.state.allSolutionBoards[this.state.stepNum]).map((x) => {
             switch (x) {
                 case 'Q':
                     return {hasQueen: 1, hasConflict: 1};
